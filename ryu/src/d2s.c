@@ -29,11 +29,6 @@
 
 #include <stdio.h>
 
-#include "common.h"
-#include "d2s.h"
-#include "d2s_full_table.h"
-#include "d2s_intrinsics.h"
-#include "digit_table.h"
 #include "ryu.h"
 
 // ABSL avoids uint128_t on Win32 even if __SIZEOF_INT128__ is defined.
