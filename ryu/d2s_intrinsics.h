@@ -19,17 +19,17 @@
 
 #include "common.h"
 
-uint64_t umul128(const uint64_t a, const uint64_t b, uint64_t* const productHi) {
+uint64_t umul128(const uint64_t a, const uint64_t b, uint64_t *const productHi) {
     // The casts here help MSVC to avoid calls to the __allmul library function.
     const uint32_t aLo = (uint32_t)a;
     const uint32_t aHi = (uint32_t)(a >> 32);
     const uint32_t bLo = (uint32_t)b;
     const uint32_t bHi = (uint32_t)(b >> 32);
     
-    const uint64_t b00 = (uint64_t)aLo * bLo;
-    const uint64_t b01 = (uint64_t)aLo * bHi;
-    const uint64_t b10 = (uint64_t)aHi * bLo;
-    const uint64_t b11 = (uint64_t)aHi * bHi;
+    const uint64_t b00 = (uint64_t)aLo  *bLo;
+    const uint64_t b01 = (uint64_t)aLo  *bHi;
+    const uint64_t b10 = (uint64_t)aHi  *bLo;
+    const uint64_t b11 = (uint64_t)aHi  *bHi;
     
     const uint32_t b00Lo = (uint32_t)b00;
     const uint32_t b00Hi = (uint32_t)(b00 >> 32);

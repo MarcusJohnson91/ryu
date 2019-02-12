@@ -84,11 +84,11 @@ static const uint32_t POW5_INV_OFFSETS[20] = {
 };
 
 // Computes 5^i in the form required by Ryu, and stores it in the given pointer.
-void double_computePow5(const uint32_t i, uint64_t* const result) {
+void double_computePow5(const uint32_t i, uint64_t *const result) {
     const uint32_t base = i / POW5_TABLE_SIZE;
     const uint32_t base2 = base * POW5_TABLE_SIZE;
     const uint32_t offset = i - base2;
-    const uint64_t* const mul = DOUBLE_POW5_SPLIT2[base];
+    const uint64_t *const mul = DOUBLE_POW5_SPLIT2[base];
     if (offset == 0) {
         result[0] = mul[0];
         result[1] = mul[1];

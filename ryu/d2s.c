@@ -111,7 +111,7 @@ bool multipleOfPowerOf2(const uint64_t value, const uint32_t p) {
 //       no internal overflow, but requires extra work since the intermediate
 //       results are not perfectly aligned.
 
-uint64_t mulShiftAll(uint64_t m, const uint64_t* const mul, const int32_t j, uint64_t *const vp, uint64_t *const vm, const uint32_t mmShift) {
+uint64_t mulShiftAll(uint64_t m, const uint64_t *const mul, const int32_t j, uint64_t *const vp, uint64_t *const vm, const uint32_t mmShift) {
     m <<= 1;
     // m is maximum 55 bits
     uint64_t tmp;
@@ -355,7 +355,7 @@ floating_decimal_64 d2d(const uint64_t ieeeMantissa, const uint32_t ieeeExponent
     return fd;
 }
 
-int to_chars(const floating_decimal_64 v, const bool sign, char* const result) {
+int to_chars(const floating_decimal_64 v, const bool sign, char *const result) {
     // Step 5: Print the decimal representation.
     int index = 0;
     if (sign) {
@@ -457,7 +457,7 @@ int to_chars(const floating_decimal_64 v, const bool sign, char* const result) {
     return index;
 }
 
-bool d2d_small_int(const uint64_t ieeeMantissa, const uint32_t ieeeExponent, floating_decimal_64* v) {
+bool d2d_small_int(const uint64_t ieeeMantissa, const uint32_t ieeeExponent, floating_decimal_64 *v) {
     const uint64_t m2 = (1ull << DOUBLE_MANTISSA_BITS) | ieeeMantissa;
     const int32_t e2 = (int32_t)ieeeExponent - DOUBLE_BIAS - DOUBLE_MANTISSA_BITS;
     
@@ -487,7 +487,7 @@ bool d2d_small_int(const uint64_t ieeeMantissa, const uint32_t ieeeExponent, flo
     return true;
 }
 
-int d2s_buffered_n(double f, char* result) {
+int d2s_buffered_n(double f, char *result) {
     // Step 1: Decode the floating-point number, and unify normalized and subnormal cases.
     const uint64_t bits = double_to_bits(f);
     
@@ -523,15 +523,15 @@ int d2s_buffered_n(double f, char* result) {
     return to_chars(v, ieeeSign, result);
 }
 
-void d2s_buffered(double f, char* result) {
+void d2s_buffered(double f, char *result) {
     const int index = d2s_buffered_n(f, result);
     
     // Terminate the string.
     result[index] = '\0';
 }
 
-char* d2s(double f) {
-    char* const result = (char*) malloc(25);
+char *d2s(double f) {
+    char *const result = (char*) malloc(25);
     d2s_buffered(f, result);
     return result;
 }

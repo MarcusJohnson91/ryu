@@ -51,7 +51,7 @@ uint32_t log10Pow5(const int32_t e) {
     return (((uint32_t) e) * 732923) >> 20;
 }
 
-int copy_special_str(char * const result, const bool sign, const bool exponent, const bool mantissa) {
+int copy_special_str(char *const result, const bool sign, const bool exponent, const bool mantissa) {
     if (mantissa) {
         memcpy(result, "NaN", 3);
         return 3;
@@ -65,12 +65,6 @@ int copy_special_str(char * const result, const bool sign, const bool exponent, 
     }
     memcpy(result + sign, "0E0", 3);
     return sign + 3;
-}
-
-uint32_t float_to_bits(const float f) {
-    uint32_t bits = 0;
-    memcpy(&bits, &f, sizeof(float));
-    return bits;
 }
 
 uint64_t double_to_bits(const double d) {
