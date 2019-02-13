@@ -25,10 +25,14 @@ extern "C" {
         return sign + 3;
     }
     
-    uint64_t double_to_bits(const double d) {
-        uint64_t bits = 0;
-        memcpy(&bits, &d, sizeof(double));
-        return bits;
+    typedef union Double2Integer {
+        double    Float;
+        uint64_t  Integer;
+    } Double2Integer;
+    
+    uint64_t ConvertDouble2Integer(double Decimal) {
+        Double2Integer Integer = {.Float = Decimal};
+        return Integer.Integer;
     }
     
 #ifdef __cplusplus

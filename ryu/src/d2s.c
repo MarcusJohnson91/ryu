@@ -488,12 +488,13 @@ extern "C" {
     
     int d2s_buffered_n(double f, char *result) {
         // Step 1: Decode the floating-point number, and unify normalized and subnormal cases.
-        const uint64_t bits = double_to_bits(f);
+        const uint64_t bits = ConvertDouble2Integer(f);
         
         // Decode bits into sign, mantissa, and exponent.
         const bool ieeeSign = ((bits >> (DOUBLE_MANTISSA_BITS + DOUBLE_EXPONENT_BITS)) & 1) != 0;
         const uint64_t ieeeMantissa = bits & ((1ull << DOUBLE_MANTISSA_BITS) - 1);
         const uint32_t ieeeExponent = (uint32_t) ((bits >> DOUBLE_MANTISSA_BITS) & ((1u << DOUBLE_EXPONENT_BITS) - 1));
+        const uint32_t Exponent2    = ieeeExponent;
         // Case distinction; exit early for the easy cases.
         if (ieeeExponent == ((1u << DOUBLE_EXPONENT_BITS) - 1u) || (ieeeExponent == 0 && ieeeMantissa == 0)) {
             return copy_special_str(result, ieeeSign, ieeeExponent, ieeeMantissa);
