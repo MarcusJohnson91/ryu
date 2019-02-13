@@ -43,7 +43,7 @@
 
 uint32_t pow5Factor(uint64_t value) {
     uint32_t count = 0;
-    for (;;) {
+    do {
         assert(value != 0);
         const uint64_t q = div5(value);
         const uint32_t r = (uint32_t) (value - 5 * q);
@@ -52,7 +52,7 @@ uint32_t pow5Factor(uint64_t value) {
         }
         value = q;
         ++count;
-    }
+    } while (value > 0);
     return count;
 }
 
@@ -270,7 +270,7 @@ extern "C" {
         // On average, we remove ~2 digits.
         if (vmIsTrailingZeros || vrIsTrailingZeros) {
             // General case, which happens rarely (~0.7%).
-            for (;;) {
+            do {
                 const uint64_t vpDiv10 = div10(vp);
                 const uint64_t vmDiv10 = div10(vm);
                 if (vpDiv10 <= vmDiv10) {
@@ -286,9 +286,10 @@ extern "C" {
                 vp = vpDiv10;
                 vm = vmDiv10;
                 ++removed;
-            }
+            } while (removed > 0);
+            
             if (vmIsTrailingZeros) {
-                for (;;) {
+                do {
                     const uint64_t vmDiv10 = div10(vm);
                     const uint32_t vmMod10 = (uint32_t) (vm - 10 * vmDiv10);
                     if (vmMod10 != 0) {
@@ -303,7 +304,7 @@ extern "C" {
                     vp = vpDiv10;
                     vm = vmDiv10;
                     ++removed;
-                }
+                } while (removed > 0);
             }
             if (vrIsTrailingZeros && lastRemovedDigit == 5 && vr % 2 == 0) {
                 // Round even if the exact number is .....50..0.
@@ -329,7 +330,7 @@ extern "C" {
             // 0: 0.03%, 1: 13.8%, 2: 70.6%, 3: 14.0%, 4: 1.40%, 5: 0.14%, 6+: 0.02%
             // Loop iterations below (approximately), with optimization above:
             // 0: 70.6%, 1: 27.8%, 2: 1.40%, 3: 0.14%, 4+: 0.02%
-            for (;;) {
+            do {
                 const uint64_t vpDiv10 = div10(vp);
                 const uint64_t vmDiv10 = div10(vm);
                 if (vpDiv10 <= vmDiv10) {
@@ -342,7 +343,8 @@ extern "C" {
                 vp = vpDiv10;
                 vm = vmDiv10;
                 ++removed;
-            }
+            } while (removed > 0);
+            
             // We need to take vr + 1 if vr is outside bounds or we need to round up.
             output = vr + (vr == vm || roundUp);
         }
@@ -507,7 +509,7 @@ extern "C" {
             // For scientic notation we need to move these zeros into the exponent.
             // (This is not needed for fixed-point notation, so it might be beneficial to trim
             // trailing zeros in to_chars only if needed - once fixed-point notation output is implemented.)
-            for (;;) {
+            do {
                 const uint64_t q = div10(v.mantissa);
                 const uint32_t r = (uint32_t)(v.mantissa - 10 * q);
                 if (r != 0) {
@@ -515,7 +517,7 @@ extern "C" {
                 }
                 v.mantissa = q;
                 ++v.exponent;
-            }
+            } while (Exponent2 > 0);
         } else {
             v = d2d(ieeeMantissa, ieeeExponent);
         }
