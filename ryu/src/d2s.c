@@ -538,7 +538,7 @@ extern "C" {
         return result;
     }
     
-    int main(int argc, const char **argv) {
+    int main() {
         double SampleValue  = 1.963246458432537456548545634609804354125;
         char  *SampleString = d2s(SampleValue);
         printf("%s\n", SampleString);
